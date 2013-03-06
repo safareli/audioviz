@@ -1,207 +1,168 @@
+(function (_) {// _  is global
 
-function CH (){
-    // Canvase Helper for generating
-    // random numbers and colors
-    // author irakli saparishvili
-    // url http://safareli.github.com
-}
-
-CH.requestAnimFrame = function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          window.oRequestAnimationFrame      ||
-          window.msRequestAnimationFrame     ||
-          function(/* function */ callback, /* DOMElement */ element){
-            window.setTimeout(callback, 1000/60);
-          };
-};
-
-CH.roundNumber = function (num, length) {
-    var newnumber = Math.round(num*Math.pow(10,length))/Math.pow(10,length);
-    return parseFloat(newnumber);
-};
-
-CH.extend = function(object,defaults){
-
-    if (typeof object === "undefined") {
-        object = {};
+    function CanvasHelper () {
+        // Canvas Helper for generating
+        // random numbers and colors and ect
+        // author irakli saparishvili
+        // url http://safareli.github.com
     }
 
-    for (key in defaults){
-        object[key] = CH.def(object[key],defaults[key]);
-    }
-    return object;
-};
 
-CH.def = function(toCheck,defaultValue){
-    return (typeof toCheck !== 'undefined') ? toCheck : defaultValue;
-};
-
-CH.rand = function  (length,start,round) {
-    start = CH.def(start,0);
-    round = CH.def(round,true);
-    if (round){
-        return  Math.floor(Math.random() * length) + start ;
-    } else{
-        return  Math.random() * length + start ;
-    }
-};
-
-CH.randXY = function (obj) {
-    var defaults = {
-        //xl *  //  xLength
-        //yl *  //  yLength
-        xs:0,   //  xStart
-        ys:0    //  yStart
-    };
-    // * required
-    obj = this.extend(obj,defaults);
-
-    var position = {
-        x : this.rand(obj.xl,obj.xs),
-        y : this.rand(obj.yl,obj.ys)
-    };
-    return position;
-};
-
-CH.randColor = function (obj){
-    var defaults = {
-        rl:255, //  redLength
-        rs:0,   //  redStart
-        gl:255, //  greenLength
-        gs:0,   //  greenStart
-        bl:255, //  blueLength
-        bs:0,   //  blueStart
-        al:0,   //  alphaLength
-        as:1   //  alphaStart
+    // round number to specific length after coma
+    // if number = 0.123456789 nd length = 5
+    // function will return 0.12346
+    CanvasHelper.roundN = function(number, length) {
+        var newnumber = Math.round(number*Math.pow(10,length))/Math.pow(10,length);
+        return parseFloat(newnumber);
     };
 
-    obj = this.extend(obj,defaults);
-    
-    var color = {
-        r: this.rand(obj.rl,obj.rs),
-        g: this.rand(obj.gl,obj.gs),
-        b: this.rand(obj.bl,obj.bs),
-        a: this.rand(obj.al,obj.as,false)
+
+    // checks if typeof toCheck is undefined
+    // and if is returns default value
+    // if not returns toCheck
+    CanvasHelper.def = function(toCheck,defaultValue){
+        return (typeof toCheck !== 'undefined') ? toCheck : defaultValue;
     };
-    return color;
-};
 
-CH.rgba = function (color) {
-    color = color || this.randColor();
-    return 'rgba('+color.r+','+color.g+','+color.b+','+color.a+')';
-};
 
-CH.Particle = function Particle() {
-    this.g = function () {//Gradient
-        if (this.alpha <= 0) {
-            return 'hsla(0,0,0,0)';
+    // looping for ech key in defaults
+    // and using CanvasHelper.def function sets value
+    // object wich will be returned
+    CanvasHelper.extend = function(object,defaults){
+        if (typeof object === "undefined") {
+            object = {};
         }
 
-        var gradient = context.createRadialGradient(this.position.x, this.position.y, 0,
-                this.position.x, this.position.y, this.radius);
-
-        var ColorStop = CH.rand(0.5,0.3,false);
-
-        gradient.addColorStop(0,CH.rgba({
-            r:this.colorMiddle.r,
-            g:this.colorMiddle.g,
-            b:this.colorMiddle.b,
-            a:this.alpha
-        }));
-        // console.log(ColorStop);
-        gradient.addColorStop(ColorStop,CH.rgba({
-            r:this.colorMiddle.r,
-            g:this.colorMiddle.g,
-            b:this.colorMiddle.b,
-            a:this.alpha
-        }));
-
-        gradient.addColorStop(1,CH.rgba({
-            r:this.colorMiddle.r,
-            g:this.colorMiddle.g,
-            b:this.colorMiddle.b,
-            a:0
-        }));
-        return gradient;
-    };
- 
-    this.reset = function (center) {
-        this.alpha = 1;
-        this.center = center || false;
-        this.radius = CH.rand(20, 10);
-        if (this.center) {
-            this.life = CH.rand(15,7);
-            this.velocity= CH.randXY({xl:5,xs:-2.5,yl:10,ys:-15});
-            this.position = {x:mouse.x,y:mouse.y};
-            this.colorMiddle = CH.randColor({rs:200,rl:55,bl:0,gl:50,gs:0});
-            this.toMouseK = 0;
-        }else{
-            this.life = CH.rand(20,30);
-            this.toMouseK = 100;
-            this.colorMiddle = CH.randColor();
-            this.velocity= CH.randXY({xl:5,xs:-2.5,yl:5,ys:-2.5});
-            this.position = CH.randXY({xl:W,yl:H});
+        for (var key in defaults){
+            object[key] = this.def(object[key],defaults[key]);
         }
-        this.remaining_life = this.life;
+
+        return object;
     };
-    this.reset();
-};
 
-CH.Bar = function Bar (){
-    this.color = {};
 
-    this.getColor = function (magnitude) {
-        if (mouse.isIn) {
-            this.color.r = magnitude;
-            this.color.g = magnitude%50 ;
-        }else{
-            this.color.r = magnitude%100;
-            this.color.g = magnitude ;
+    // returns randome number
+    // CanvasHelper.rand()            =>  0.1567417317
+    // CanvasHelper.rand(2)           =>  0  or 1
+    // CanvasHelper.rand(2,false)     =>  float from 0 to 2; 1.2486425527
+    // CanvasHelper.rand(2,10)        =>  5 or 6 , 7 , 8 ...
+    // CanvasHelper.rand(2,10,false)  =>  float from 2 to 10; 7.4861754
+    CanvasHelper.rand = function (argumentsArray) {
+         var _arguments = arguments;
+        if (Object.prototype.toString.call(argumentsArray) === "[object Array]") {
+            _arguments = argumentsArray;
         }
-        this.color.b = (255-magnitude)%75;
-        this.color.a = 1;
-        if (magnitude < 65) {
-            return 'rgba(0,0,0,0)';
+
+        var end = 1,
+            start = 0,
+            round = true;
+        switch(_arguments.length) {
+            case 0:
+                round = false;
+            break;
+
+            case 1:
+                end = this.def(_arguments[0],end);
+            break;
+
+            case 2:
+                if (typeof _arguments[1] == "boolean") {
+                    end = this.def(_arguments[0],end);
+                    round = this.def(_arguments[1],round);
+                }else{
+                    start = this.def(_arguments[0],start);
+                    end = this.def(_arguments[1],end);
+                }
+            break;
+
+            case 3:
+                start = this.def(_arguments[0],start);
+                end = this.def(_arguments[1],end);
+                round = this.def(_arguments[2],round);
+            break;
         }
-        return CH.rgba(this.color);
-    };
-};
-CH.Mouse = function Mouse(canvas){
-    this.isDown = false;
-    this.isIn = false;
-    this.x = undefined;
-    this.y = undefined;
-    this.reset = function(){
-        this.isDown = false;
-        this.isIn = false;
-        this.x = undefined;
-        this.y = undefined;
+
+        if (round){
+            return  Math.floor(Math.random() * (end - start)) + start ;
+        } else{
+            return  Math.random() * (end - start) + start ;
+        }
     };
 
-    var self = this;
-    
 
-    canvas.addEventListener('mousemove', function (event) {
-        self.x = event.pageX;
-        self.y = event.pageY;
-    },false);
+    CanvasHelper.randObj = function (obj) {
+        // set data to returnObj
+        for (var key in obj){
+            obj[key] = this.rand(obj[key]);
+        }
 
-    canvas.addEventListener('mouseout',  function () {
-        self.reset();
-    },false);
+        return obj;
+    };
 
-    canvas.addEventListener('mouseover',  function () {
-        self.isIn = true;
-    },false);
+    CanvasHelper.randColor = function (obj){
+        var defaults = {
+            r:[0,255],
+            g:[0,255],
+            b:[0,255],
+            a:[1,1]
+        };
+        obj = this.extend(obj,defaults);
+        return this.randObj(obj);
+    };
 
-    canvas.addEventListener('mousedown',  function () {
-        self.isDown = true;
-    },false);
 
-    canvas.addEventListener('mouseup',  function () {
-        self.isDown = false;
-    },false);
+    //return rgba string
+    CanvasHelper.rgba = function (color) {
+        color = color || this.randColor();
+        color.a = this.def(color.a, 1);
+        return 'rgba('+color.r+','+color.g+','+color.b+','+color.a+')';
+    };
 
-}
+    CanvasHelper._ = {};//data exchange for moduls
+
+    // make CanvasHelper publicly exsible
+    _.CanvasHelper = CanvasHelper;
+
+
+
+    // copies vender requestAnimationFrame
+    // to normal none vender one and will
+    // bicome publicly exesible
+    _.requestAnimationFrame = (function(){
+        return window.requestAnimationFrame    ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
+            function(/* function */ callback, /* DOMElement */ element){
+                window.setTimeout(callback, 1000/60);
+            };
+    })();
+
+    _.onload =  function () {
+        var canvas = _.document.getElementById("canvas");
+        var head = _.document.getElementsByTagName("head")[0] || _.document.documentElement;
+        var dependences = canvas.dataset.dependences.trim().toLowerCase().split(' ');
+        for (var i = 0; i < dependences.length; i++) {
+            dependences[i]='canvashelper/'+dependences[i]+'.js';
+        }
+        dependences.push(canvas.id+'.js');
+        includeJsFiles(dependences);
+        function includeJsFiles (jsFiles) {
+            if (jsFiles.length === 0) {
+                // obj.onload();
+                return false;
+            }
+
+            var script = _.document.createElement("script");
+            script.src = jsFiles[0];
+            head.appendChild(script);
+            script.onload = function  () {
+                head.removeChild( script );
+                includeJsFiles(jsFiles.slice(1));
+            };
+        }
+        _.onload = null;
+    };
+
+})(this);
