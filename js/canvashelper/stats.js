@@ -11,9 +11,7 @@ CanvasHelper.Stats = function Stats() {
 
     var container = document.createElement( 'div' );
     container.id = 'stats';
-    container.addEventListener( 'mousedown', function ( event ) {
-        event.preventDefault(); setMode( ++ mode % 2 );
-    }, false );
+    container.addEventListener( 'mousedown', function ( event ) { event.preventDefault(); setMode( ++ mode % 2 ); }, false );
     container.style.cssText = 'width:80px;opacity:0.9;cursor:pointer';
 
     var fpsDiv = document.createElement( 'div' );
@@ -34,9 +32,9 @@ CanvasHelper.Stats = function Stats() {
 
     while ( fpsGraph.children.length < 74 ) {
 
-        var bar = document.createElement( 'span' );
-        bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
-        fpsGraph.appendChild( bar );
+        var fpsBar = document.createElement( 'span' );
+        fpsBar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
+        fpsGraph.appendChild( fpsBar );
 
     }
 
@@ -58,9 +56,9 @@ CanvasHelper.Stats = function Stats() {
 
     while ( msGraph.children.length < 74 ) {
 
-        var bar = document.createElement( 'span' );
-        bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
-        msGraph.appendChild( bar );
+        var msBar = document.createElement( 'span' );
+        msBar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
+        msGraph.appendChild( msBar );
 
     }
 

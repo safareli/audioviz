@@ -75,7 +75,14 @@ module.exports = function(grunt) {
                 options: {
                     livereload: true,
                 },
-        }
+            }
+        },
+        jshint: {
+            all: [
+                'Gruntfile.js', 
+                'js/*.js',
+                'js/canvashelper/*.js'
+            ]
         }
     }); 
 
@@ -84,9 +91,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     //register defoult task
     grunt.registerTask('default', [
+        'jshint',
         'min',
         'connect:livereload',
         'watch'
