@@ -27,22 +27,73 @@ module.exports = function(grunt) {
                 }
             }
         },
+        clean: {
+            dist: {
+                src: ["dist/"]
+            }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                expand: true,
+                cwd: '.',
+                src: ['*.html'],
+                dest: 'dist/',
+                ext: '.html'
+            }
+        },
+        cssmin: {
+            dist: {
+                options: {
+                    banner: "/*sample reset css*/"
+                },
+                expand: true,
+                cwd: 'css/',
+                src: ['*.css'],
+                dest: 'dist/css/',
+                ext: '.css'
+            }
+        },
         watch: {
+            html:{
+                files:['*.html'],
+                tasks : ['htmlmin:dist']
+            },
+            css:{
+                files:['css/*.css'],
+                tasks : ['cssmin:dist']
+            },
             assets: {
-                files: ['*.html', 'css/*.css', 'js/*.js','img/*.*'],
+                files: [
+                    'dist/*.html', 
+                    'dist/css/*.css', 
+                    'dist/js/*.js',
+                    'dist/img/*.*'],
                 options: {
                     livereload: true,
                 },
-            }
+        }
         }
     }); 
 
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     //register defoult task
     grunt.registerTask('default', [
+        'min',
         'connect:livereload',
-        'watch:assets'
+        'watch'
+    ]);
+    grunt.registerTask('min', [
+        'clean',
+        'htmlmin',
+        'cssmin'
     ]);
 };
