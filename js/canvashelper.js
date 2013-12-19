@@ -155,7 +155,7 @@
             }
 
             var script = _.document.createElement("script");
-            script.src = jsFiles[0];
+            script.src = "/js/"+jsFiles[0];
             head.appendChild(script);
             script.onload = function  () {
                 head.removeChild( script );
