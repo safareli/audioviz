@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-    // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         connect: {
@@ -110,13 +109,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
-    //register defoult task
     grunt.registerTask('default', [
         'jshint',
         'min',
         'connect:livereload',
         'watch'
     ]);
+    
     grunt.registerTask('min', [
         'clean',
         'htmlmin',

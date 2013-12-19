@@ -17,25 +17,41 @@
 
     (function init() {
         audio = new $.Audio(document);
-
         canvas = document.getElementById('canvas');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
         mouse = new $.Mouse(canvas);
-        var n = canvas.width/20 + canvas.height/20;
-
-
         context = canvas.getContext( '2d' );
-        
-     
+
         _.canvas = canvas;
         _.canvasContext = context;
         _.mouse = mouse;
         _.particles = particles;
         _.bars = bars;
 
+        var Psize;
+        var setSize = function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            var newPsize = Math.round(canvas.width/20 + canvas.height/20);
+            Psize = $.def(Psize,newPsize);
+            while(Psize != newPsize){
+                if (Psize > newPsize) {
+                    particles.pop();
+                    Psize--;
+                }else{
+                    particles.push(new $.Particle());
+                    Psize++;
+                }
+            }
+        };
+        setSize();
+        window.onresize = setSize;
 
-        for (var i = 0; i < n; i++) {
+        
+
+
+     
+
+        for (var i = 0; i < Psize; i++) {
             particles.push(new $.Particle());
         }
 
