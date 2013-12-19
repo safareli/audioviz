@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 options: {
                     hostname : "*",
                     livereload: true,
-                    base: '.',
+                    base: 'dist',
                     port: 3000,
                 },
             },
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                 options: {
                     hostname : "*",
                     livereload: false,
-                    base: '.',
+                    base: 'dist',
                     port: 3000,
                 },
             },
@@ -57,6 +57,17 @@ module.exports = function(grunt) {
                 ext: '.css'
             }
         },
+        uglify: {
+            scripts: {
+               files: [{
+                    expand: true,
+                    cwd: 'js/',
+                    src: ['**/*.js'],
+                    dest: 'dist/js/',
+                    ext: '.js'
+                }] 
+            }
+        },
         watch: {
             html:{
                 files:['*.html'],
@@ -65,6 +76,14 @@ module.exports = function(grunt) {
             css:{
                 files:['css/*.css'],
                 tasks : ['cssmin:dist']
+            },
+            js:{
+                files:['js/*.js','js/canvashelper/*.js'],
+                tasks : ['jshint:scripts','uglify']
+            },
+            gruntfile:{
+                files:['Gruntfile.js'],
+                tasks : ['jshint:gruntfile']
             },
             assets: {
                 files: [
@@ -78,11 +97,8 @@ module.exports = function(grunt) {
             }
         },
         jshint: {
-            all: [
-                'Gruntfile.js', 
-                'js/*.js',
-                'js/canvashelper/*.js'
-            ]
+            gruntfile: ['Gruntfile.js'], 
+            scripts:['js/*.js','js/canvashelper/*.js']
         }
     }); 
 
@@ -92,6 +108,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
     //register defoult task
     grunt.registerTask('default', [
@@ -103,6 +120,7 @@ module.exports = function(grunt) {
     grunt.registerTask('min', [
         'clean',
         'htmlmin',
+        'uglify',
         'cssmin'
     ]);
 };
