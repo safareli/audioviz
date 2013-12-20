@@ -1,24 +1,17 @@
 module.exports = function(grunt) {
+    var live = grunt.option('live')? true :false;
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         connect: {
-            livereload: {
+            normal: {
                 options: {
                     hostname : "*",
-                    livereload: true,
+                    livereload: live,
                     base: 'dist',
                     port: 3000,
                 },
             },
-            noLivereload: {
-                options: {
-                    hostname : "*",
-                    livereload: false,
-                    base: 'dist',
-                    port: 3000,
-                },
-            },
-            server: {
+            alive: {
                 options: {
                     hostname : "*",
                     port: 3000,
@@ -91,8 +84,8 @@ module.exports = function(grunt) {
                     'dist/js/*.js',
                     'dist/img/*.*'],
                 options: {
-                    livereload: true,
-                },
+                    livereload: live,
+                }
             }
         },
         jshint: {
@@ -112,14 +105,14 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'jshint',
         'min',
-        'connect:livereload',
+        'connect:normal',
         'watch'
     ]);
-    
+    grunt.registerTask('server',['connect:alive']);
     grunt.registerTask('min', [
         'clean',
         'htmlmin',
         'uglify',
         'cssmin'
-    ]);
+    ]); 
 };
