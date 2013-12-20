@@ -16,7 +16,7 @@ CanvasHelper.Audio = function Audio (domObj){
             event.preventDefault();
         }
     }
-
+//http://youtubeinmp3.com/fetch/?video=www.youtube.com/watch?v=RW-gsCb6hJ4
     domObj.addEventListener('drop', function (e) {
         stop(e);
 
@@ -35,6 +35,20 @@ CanvasHelper.Audio = function Audio (domObj){
     }, false);
 };
 
+// TODO play from url
+// CanvasHelper.Audio.prototype.fromUrl= function (url) {
+//   var request = new XMLHttpRequest();
+//   request.open('GET', url, true);
+//   request.responseType = 'arraybuffer';
+//   var self = this;
+//   // Decode asynchronously
+//   request.onload = function() {
+//     self.audioContext.decodeAudioData(request.response, function(buffer) {
+//       self.initAudio(buffer);
+//     }, onError);
+//   };
+//   request.send();
+// };
 CanvasHelper.Audio.prototype.createAudio= function () {
     var processor = this.audioContext.createJavaScriptNode(2048 , 1 , 1 );
 
