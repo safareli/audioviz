@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
     var live = grunt.option('live')? true :false;
+    var base = grunt.option('dist')? "dist" :".";
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         connect: {
@@ -7,13 +8,14 @@ module.exports = function(grunt) {
                 options: {
                     hostname : "*",
                     livereload: live,
-                    base: 'dist',
+                    base: '.',
                     port: 3000,
                 },
             },
             alive: {
                 options: {
                     hostname : "*",
+                    base: base,
                     port: 3000,
                     keepalive: true
                 }
@@ -61,17 +63,12 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            html:{
-                files:['*.html'],
-                tasks : ['htmlmin:dist']
-            },
-            css:{
-                files:['css/*.css'],
-                tasks : ['cssmin:dist']
-            },
             js:{
                 files:['js/*.js','js/canvashelper/*.js'],
-                tasks : ['jshint:scripts','uglify']
+                tasks : ['jshint:scripts'],
+                options: {
+                    livereload: live,
+                }
             },
             gruntfile:{
                 files:['Gruntfile.js'],
@@ -79,10 +76,9 @@ module.exports = function(grunt) {
             },
             assets: {
                 files: [
-                    'dist/*.html', 
-                    'dist/css/*.css', 
-                    'dist/js/*.js',
-                    'dist/img/*.*'],
+                    '*.html', 
+                    'css/*.css',
+                    'img/*.*'],
                 options: {
                     livereload: live,
                 }
@@ -104,7 +100,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', [
         'jshint',
-        'min',
         'connect:normal',
         'watch'
     ]);
