@@ -8,7 +8,7 @@ describe('extend',function(){
         [undefined,54354],
         ['asdasd',[]]
     ];
-    it('should olways return object',function(){
+    it('should always return an object',function(){
         olways.forEach(function(element, index, array){
             var extended = extend.apply(null,element);
             var title = 'olways[' + index + ']'
@@ -17,7 +17,7 @@ describe('extend',function(){
         });
     });
     
-    it('should extend first argument with thecond arguments keys',function(){
+    it('should extend the first argument with second arguments keys',function(){
         var user = {
             userName:'jhon555',
             gender:'male'
