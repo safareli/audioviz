@@ -6,8 +6,8 @@
     "type": "git",
     "url": "git://github.com/Safareli/audioviz.git"
   },
-  "scripts":{
-      "test": "./node_modules/.bin/mocha --ui=tdd --reporter spec"
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --ui=tdd --reporter spec"
   },
   "keywords": [
     "HTML5",
@@ -31,6 +31,11 @@
   },
   "devDependencies": {
     "mocha": "^1.18.2",
+    "franim": "0.0.5",
+    "insert-css": "^0.1.1",
+    "brfs": "^1.0.1",
     "chai": "^1.9.1"
+  },
+  "dependencies": {
   }
 }
