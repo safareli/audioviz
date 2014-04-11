@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git://github.com/Safareli/audioviz.git"
   },
+  "scripts":{
+      "test": "./node_modules/.bin/mocha --ui=tdd --reporter spec"
+  },
   "keywords": [
     "HTML5",
     "Audio",
@@ -17,5 +20,7 @@
   "license": "BSD",
   "gitHead": "636c4862246941f83c8f0438771a87f93f8ba6cc",
   "devDependencies": {
+    "mocha": "^1.18.2",
+    "chai": "^1.9.1"
   }
 }
