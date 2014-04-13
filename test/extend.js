@@ -1,7 +1,8 @@
+/*jshint expr: true*/
 var expect = require('chai').expect;
 var extend = require('../lib/extend');
 describe('extend',function(){
-    var olways = [
+    var always = [
         [null,null],
         [5,"asdasd"],
         [54354,undefined],
@@ -9,9 +10,9 @@ describe('extend',function(){
         ['asdasd',[]]
     ];
     it('should always return an object',function(){
-        olways.forEach(function(element, index, array){
+        always.forEach(function(element, index, array){
             var extended = extend.apply(null,element);
-            var title = 'olways[' + index + ']'
+            var title = 'always[' + index + ']';
             expect(extended, title).to.be.an.instanceof(Object);
             expect(extended, title).to.be.empty;
         });
