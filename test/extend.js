@@ -1,4 +1,3 @@
-/*jshint expr: true*/
 var expect = require('chai').expect;
 var extend = require('../lib/extend');
 describe('extend',function(){
