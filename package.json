@@ -31,11 +31,17 @@
   },
   "devDependencies": {
     "mocha": "^1.18.2",
-    "franim": "0.0.5",
+    "franim": "0.0.6",
     "insert-css": "^0.1.1",
     "brfs": "^1.0.1",
-    "chai": "^1.9.1"
+    "chai": "^1.9.1",
+    "gulp": "^3.6.0",
+    "jshint-stylish": "^0.1.5",
+    "gulp-mocha": "^0.4.1",
+    "gulp-jshint": "^1.5.3",
+    "gulp-load-plugins": "^0.5.0",
+    "coffee-script": "^1.7.1",
+    "gulp-cached": "0.0.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
