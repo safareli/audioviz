@@ -6,8 +6,8 @@ var timesGen = function(t,useArguuments){
             for(var i = 0;i < t; i++){
                 callback.apply(thisArg || null,(useArguuments) ? arguments : [i]);
             }
-        }
-    }
+        };
+    };
 };
 describe('random',function(){
     describe('number',function(){
@@ -15,7 +15,7 @@ describe('random',function(){
         
         it('should return float from 0 to 1 with no arguments', times(function(){
             expect(random.number()).to.be.within(0,1);
-        }))
+        }));
         
         describe('should return a whole number if the round is true',function(){
             
@@ -46,10 +46,10 @@ describe('random',function(){
         });
     });
     describe('object',function(){
-        it('should make random objcet with default keys')
+        it('should make random objcet with default keys');
     });
     describe('color',function(){
-        it('should extend default keys and return color object')
+        it('should extend default keys and return color object');
     });
     
 });
