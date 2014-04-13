@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 var rgbaString = require('../lib/rgbastring');
 
 describe('rgbaString',function(){
-    var rgbRegex = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d+)\)$/;
+    var rgbaRegex = /^rgba\((0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5]),(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5]),(0|[1-9]\d?|1\d\d?|2[0-4]\d|25[0-5]),((0.[1-9])|[01])\)$/;
     
     it('should throw arror with no arguments',function(){
         expect(function () { rgbaString(); }).to.throw(TypeError);
@@ -19,5 +19,12 @@ describe('rgbaString',function(){
         expect(rgbaString.bind(null,undefined)).to.throw(TypeError);
     });
     
-    it('should return valid rgba string');
+    it('should return valid rgba string',function(){
+        expect(rgbaString({r:255})).to.match(rgbaRegex);
+    });
+    it('should return 0 as default for red, green or blue',function(){
+        expect(rgbaString({r:255})).to.equal("rgba(255,0,0,1)");
+        expect(rgbaString({g:255})).to.equal("rgba(0,255,0,1)");
+        expect(rgbaString({b:255})).to.equal("rgba(0,0,255,1)");
+    });
 });
