@@ -25,10 +25,7 @@ gulp.task 'lint', ->
     .pipe map((file, cb) ->
       path = file.path.substring(__dirname.length)
       matches = path.match(/lib\/(.+\.(js|coffee))/)
-      if matches
-        testfile = "#{__dirname}/test/#{matches[1]}";
-        #console.log($.cached.caches['test']);
-        if $.cached.caches['test']
+      if matches and $.cached.caches['test']
           delete $.cached.caches['test']["#{__dirname}/test/#{matches[1]}"]
       cb(null,file)
     )
