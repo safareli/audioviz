@@ -8,6 +8,7 @@ describe('extend',function(){
         [undefined,54354],
         ['asdasd',[]]
     ];
+
     it('should always return an object',function(){
         always.forEach(function(element, index, array){
             var extended = extend.apply(null,element);
@@ -16,7 +17,7 @@ describe('extend',function(){
             expect(extended, title).to.be.empty;
         });
     });
-    
+
     it('should extend the first argument with second arguments keys',function(){
         var user = {
             userName:'jhon555',
