@@ -43,7 +43,11 @@
     "coffee-script": "^1.7.1",
     "gulp-cached": "0.0.3",
     "gulp-notify": "^1.2.5",
-    "map-stream": "^0.1.0"
+    "map-stream": "^0.1.0",
+    "vinyl-source-stream": "^0.1.1",
+    "browserify": "^3.41.0",
+    "cacheify": "^0.4.0",
+    "level": "^0.18.0"
   },
   "dependencies": {}
 }
