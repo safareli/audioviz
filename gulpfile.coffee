@@ -4,7 +4,6 @@ stylish = require('jshint-stylish')
 map = require('map-stream')
 source = require('vinyl-source-stream')
 browserify = require('browserify')
-
 cacheify = require('cacheify')
 partialify = require('partialify')
 level = require('level')
@@ -34,12 +33,13 @@ gulp.task 'build', ['line', 'test'], ->
   browserify 
     entries: ["./lib"]
     #extensions: [".coffee", ".hbs", ".css"]
-  .transform(cachingPartialify)
+  .transform cachingPartialify
   .bundle(debug: isDebag)
   .on "error", $.notify.onError
     message: "<%= error.message %>"
     title: "JavaScript Error"
   .pipe source('bundle.js')
+  .pipe $.if(!isDebag, $.streamify($.uglify()))
   .pipe gulp.dest('./')
 
 gulp.task 'lint', ->
