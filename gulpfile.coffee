@@ -8,7 +8,7 @@ browserify = require('browserify')
 cacheify = require('cacheify')
 partialify = require('partialify')
 level = require('level')
-db = level('./cache')
+db = level('./.cache/')
 cachingPartialify = cacheify(partialify, db)
 
 isDebag = false
