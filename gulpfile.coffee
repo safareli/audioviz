@@ -16,7 +16,7 @@ isDebag = false
 scripts = ['lib/*.js','test/*.js']
 [lib,test] = scripts
 
-gulp.task 'line',  ->
+logDateLine = () ->
   now = new Date()
   l = now.getMilliseconds()
   s = now.getSeconds()
@@ -29,7 +29,7 @@ gulp.task 'test', ['lint'], ->
     .pipe $.cached('test')
     .pipe $.mocha({reporter:'spec'})
 
-gulp.task 'build', ['line', 'test'], ->
+gulp.task 'build', ['test'], ->
   browserify 
     entries: ["./lib"]
     #extensions: [".coffee", ".hbs", ".css"]
@@ -59,6 +59,9 @@ gulp.task 'default', ['test'],  ->
 
 gulp.task 'watch', ->
   isDebag = true;
+  logDateLine();
   gulp.start 'build'
-  gulp.watch scripts, ['build']
+  gulp.watch scripts, () -> 
+    logDateLine();
+    gulp.start 'build'
   return
