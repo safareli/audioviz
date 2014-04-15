@@ -6,10 +6,10 @@ source = require('vinyl-source-stream')
 browserify = require('browserify')
 
 cacheify = require('cacheify')
-brfs = require('brfs')
+partialify = require('partialify')
 level = require('level')
 db = level('./cache')
-cachingBrfs = cacheify(brfs, db)
+cachingPartialify = cacheify(partialify, db)
 
 isDebag = false
 
@@ -34,7 +34,7 @@ gulp.task 'build', ['line', 'test'], ->
   browserify 
     entries: ["./lib"]
     #extensions: [".coffee", ".hbs", ".css"]
-  .transform(cachingBrfs)
+  .transform(cachingPartialify)
   .bundle(debug: isDebag)
   .on "error", $.notify.onError
     message: "<%= error.message %>"
