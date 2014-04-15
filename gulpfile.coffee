@@ -11,6 +11,7 @@ level = require('level')
 db = level('./cache')
 cachingBrfs = cacheify(brfs, db)
 
+isDebag = false
 
 
 scripts = ['lib/*.js','test/*.js']
@@ -34,7 +35,7 @@ gulp.task 'build', ['line', 'test'], ->
     entries: ["./lib"]
     #extensions: [".coffee", ".hbs", ".css"]
   .transform(cachingBrfs)
-  .bundle(debug: true)
+  .bundle(debug: isDebag)
   .on "error", $.notify.onError
     message: "<%= error.message %>"
     title: "JavaScript Error"
@@ -54,9 +55,10 @@ gulp.task 'lint', ->
     .pipe $.jshint.reporter(stylish)
 
 gulp.task 'default', ['test'],  ->
-  #gulp.start 'test'
   return
 
-gulp.task 'watch', ['build'], ->
+gulp.task 'watch', ->
+  isDebag = true;
+  gulp.start 'build'
   gulp.watch scripts, ['build']
   return
