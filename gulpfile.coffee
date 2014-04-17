@@ -23,7 +23,15 @@ logDateLine = () ->
   m = now.getMinutes()
   h = now.getHours()
   console.log("===============[#{h}:#{m}:#{s}.#{l}]===============")
-
+  
+gulp.task "connect", ->
+  $.connect.server
+    host: '0.0.0.0'
+    root: '.'
+    port: 3000
+    livereload:
+      port: 4000
+  
 gulp.task 'test', ['lint'], ->
   gulp.src(test)
     .pipe $.cached('test')
@@ -41,6 +49,7 @@ gulp.task 'build', ['test'], ->
   .pipe source('bundle.js')
   .pipe $.if(!isDebag, $.streamify($.uglify()))
   .pipe gulp.dest('./')
+  .pipe $.if(isDebag, $.connect.reload())
 
 gulp.task 'lint', ->
   gulp.src(scripts)
@@ -57,7 +66,7 @@ gulp.task 'lint', ->
 gulp.task 'default', ['test'],  ->
   return
 
-gulp.task 'watch', ->
+gulp.task 'watch', ['connect'], ->
   isDebag = true;
   logDateLine();
   gulp.start 'build'
