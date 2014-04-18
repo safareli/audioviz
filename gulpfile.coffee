@@ -35,7 +35,12 @@ gulp.task "connect", ->
 gulp.task 'test', ['lint'], ->
   gulp.src(test)
     .pipe $.cached('test')
-    .pipe $.mocha({reporter:'spec'})
+    .pipe $.mocha
+      globals: ['chai']
+      timeout: 6000
+      ignoreLeaks: false
+      ui: 'bdd'
+      reporter: 'spec'
 
 gulp.task 'build', ['test'], ->
   browserify 
