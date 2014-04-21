@@ -32,7 +32,7 @@ gulp.task "connect", ->
       port: 4000
   
 gulp.task 'test', ['lint'], ->
-  return null unless isDebag
+  return null if isDebag
   gulp.src(test)
     .pipe $.cached('test')
     .pipe $.mocha
