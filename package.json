@@ -35,7 +35,8 @@
     ]
   },
   "devDependencies": {
-    "mocha": "^1.18.2",
+  },
+  "dependencies": {
     "franim": "0.0.6",
     "insert-css": "^0.1.1",
     "chai": "^1.9.1",
@@ -62,6 +63,5 @@
     "numberer": "^0.1.0",
     "optimist": "^0.6.1",
     "chai-spies": "^0.5.1"
-  },
-  "dependencies": {}
+  }
 }
