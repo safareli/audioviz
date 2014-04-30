@@ -1,5 +1,6 @@
 gulp = require('gulp')
 $ = require('gulp-load-plugins')(lazy: true) #plugins
+argv = require('optimist').argv;
 stylish = require('jshint-stylish')
 map = require('map-stream')
 source = require('vinyl-source-stream')
@@ -22,17 +23,17 @@ logDateLine = () ->
   m = now.getMinutes()
   h = now.getHours()
   console.log("===============[#{h}:#{m}:#{s}.#{l}]===============")
-  
+
 gulp.task "connect", ->
   $.connect.server
     host: '0.0.0.0'
     root: '.'
-    port: 3000
-    livereload:
-      port: 4000
-  
+    port: process.env.PORT or 3000
+    livereload: ((if argv.production then false else 
+        port: 4000
+    ))  
 gulp.task 'test', ['lint'], ->
-  return null if isDebag
+  return null if isDebag or argv.production
   gulp.src(test)
     .pipe $.cached('test')
     .pipe $.mocha
@@ -68,7 +69,7 @@ gulp.task 'lint', ->
     .pipe $.jshint()
     .pipe $.jshint.reporter(stylish)
 
-gulp.task 'default', ['test'],  ->
+gulp.task 'default', ['build', 'connect'],  ->
   return
 
 gulp.task 'watch', ['connect'], ->
