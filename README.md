@@ -6,8 +6,8 @@
 
 [![Codeship Status for Safareli/audioviz][codeship-image]][codeship-url] [![Code Climate][climate-image]][climate-url]
 
-[climate-url]: https://codeclimate.com/github/Safareli/audioviz
-[climate-image]: https://codeclimate.com/github/Safareli/audioviz.png
+[climate-url]: https://codeclimate.com/github/safareli/audioviz
+[climate-image]: https://codeclimate.com/github/safareli/audioviz.png
 
 [codeship-url]: https://www.codeship.io/projects/18836
 [codeship-image]: https://www.codeship.io/projects/417c7840-a63f-0131-9ebc-32a40fc12c91/status?branch=master
